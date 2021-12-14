@@ -98,44 +98,72 @@ function renderHeader() {
 
 }
 
-{/* <main>
-        <h2 class="main-title">Home</h2>
-        <ul class="product-list">
-            <li class="product-item">
-                <img class="product-item__image"
-                    src="https://img.hollisterco.com/is/image/anf/KIC_359-1220-1911-805_prod1" alt="" />
-                <h3 class="product-item__title">Title</h3>
-                <p class="product-item__price">$40<span class="product-item__discount">$22</span></p>
-            </li>
-        </ul>
+{/* 
+<main>
+ <h2 class="main-title">Home</h2>
+ <ul class="product-list">
+    <li class="product-item">
+        <img class="product-item__image"
+            src="https://img.hollisterco.com/is/image/anf/KIC_359-1220-1911-805_prod1" alt="" />
+        <h3 class="product-item__title">Title</h3>
+        <p class="product-item__price">
+            <span class="product-item__full-price">$40</span> <span class="product-item__discount">$22</span>
+        </p>
+        <span class="product-item__new">NEW!</span>
+    </li>
+ </ul>
 </main> */}
 
 function renderMain() {
-    //     const mainEl = document.createElement("main")
-    //     for (const product of state.store) {
+    const mainEl = document.createElement("main")
+    document.body.append(mainEl)
 
-    //         const shopSection = document.createElement("section")
-    //         shopSection.setAttribute("class", "products")
+    const titleEl = document.createElement("h2")
+    titleEl.textContent = "Home"
+    titleEl.setAttribute('class', 'main-title')
 
-    //         const productLink = document.createElement("a")
-    //         productLink.setAttribute("href", "#")
+    const productList = document.createElement('ul')
+    productList.setAttribute('class', 'product-list')
 
-    //         const productImage = document.createElement("img")
-    //         productImage.setAttribute("src", product.image)
+    mainEl.append(titleEl, productList)
 
-    //         const h3El = document.createElement("h3")
-    //         h3El.textContent = product.name
+    const productItem = document.createElement('li')
+    productItem.setAttribute('class', 'product-item')
 
-    //         const spanEl = document.createElement("span")
-    //         spanEl.setAttribute("class", "price")
-    //         spanEl.textContent = `£${product.price}`
+    productList.append(productItem)
 
-    //         const discountPrice = document.createElement("span")
-    //         discountPrice.setAttribute("class", "disconted-price")
-    //}
+    const imageEl = document.createElement('img')
+    imageEl.setAttribute('class', 'product-item__image')
+    imageEl.setAttribute('src', '#')
+
+    const productTitleEl = document.createElement('h3')
+    productTitleEl.setAttribute('class', 'product-item__title')
+    productTitleEl.textContent = "title"
+
+    const priceEl = document.createElement('p')
+    priceEl.setAttribute('class', 'product-item__price')
+
+    const fullPriceSpan = document.createElement('span')
+    fullPriceSpan.setAttribute('class', 'product-item__full-price')
+    fullPriceSpan.textContent = ""
+
+    const discountSpan = document.createElement('span')
+    discountSpan.setAttribute('class', 'product-item__discount')
+    discountSpan.textContent = ""
+
+    const newEl = document.createElement('span')
+    newEl.setAttribute('class', 'product-item__new')
+    newEl.textContent = "NEW!"
+
+    priceEl.append(fullPriceSpan, discountSpan)
+    productItem.append(imageEl, productTitleEl, priceEl, newEl)
+
+
 
 
 }
+
+
 
 {/* <footer>
         <h2>Hollixton</h2>
@@ -153,9 +181,10 @@ function renderFooter() {
 }
 
 function render() {
-    //     document.body.innerHTML = ""
-    //     renderHeader()
-    //     renderMain()
-    //     renderFooter()
+    document.body.innerHTML = ""
+    renderHeader()
+    renderMain()
+    renderFooter()
 }
-// render()
+
+render()

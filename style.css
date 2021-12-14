@@ -61,6 +61,7 @@ img {
 
 .product-item {
     width: 200px;
+    position: relative;
 }
 
 .product-item__title {
@@ -73,4 +74,18 @@ img {
 
 .product-item__discount {
     color: red;
+}
+
+.product-item__new {
+    position: absolute;
+    top: -1rem;
+    right: 0;
+
+    background-color: royalblue;
+    padding: 0.2rem;
+    color: white;
+    
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    font-size: 0.8rem;
 }
