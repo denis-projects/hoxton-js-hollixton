@@ -1,5 +1,34 @@
 const state = {
-    store: []
+    store: [
+        {
+            "id": 1,
+            "type": "Guys",
+            "name": "Crewneck T-Shirt 3-Pack",
+            "image": "https://img.hollisterco.com/is/image/anf/KIC_324-1085-0123-100_prod1",
+            "price": 40,
+            "discountedPrice": 21.99,
+            "dateEntered": "2021/08/10",
+            "stock": 10
+        },
+        {
+            "id": 2,
+            "type": "Girls",
+            "name": "Smocked Tiered Mini Dress",
+            "image": "https://img.hollisterco.com/is/image/anf/KIC_359-1220-1911-805_prod1",
+            "price": 29,
+            "dateEntered": "2021/07/10",
+            "stock": 5
+        },
+        {
+            "id": 3,
+            "type": "Girls",
+            "name": "Gilly Hicks Cozy Joggers",
+            "image": "https://img.hollisterco.com/is/image/anf/KIC_346-1252-0485-116_prod1",
+            "price": 27,
+            "dateEntered": "2021/05/06",
+            "stock": 15
+        }
+    ]
 }
 
 function fetchStore() {
@@ -127,38 +156,40 @@ function renderMain() {
 
     mainEl.append(titleEl, productList)
 
-    const productItem = document.createElement('li')
-    productItem.setAttribute('class', 'product-item')
+    for (const product of state.store) {
 
-    productList.append(productItem)
+        const productItem = document.createElement('li')
+        productItem.setAttribute('class', 'product-item')
 
-    const imageEl = document.createElement('img')
-    imageEl.setAttribute('class', 'product-item__image')
-    imageEl.setAttribute('src', '#')
+        productList.append(productItem)
 
-    const productTitleEl = document.createElement('h3')
-    productTitleEl.setAttribute('class', 'product-item__title')
-    productTitleEl.textContent = "title"
+        const imageEl = document.createElement('img')
+        imageEl.setAttribute('class', 'product-item__image')
+        imageEl.setAttribute('src', product.image)
 
-    const priceEl = document.createElement('p')
-    priceEl.setAttribute('class', 'product-item__price')
+        const productTitleEl = document.createElement('h3')
+        productTitleEl.setAttribute('class', 'product-item__title')
+        productTitleEl.textContent = product.name
 
-    const fullPriceSpan = document.createElement('span')
-    fullPriceSpan.setAttribute('class', 'product-item__full-price')
-    fullPriceSpan.textContent = ""
+        const priceEl = document.createElement('p')
+        priceEl.setAttribute('class', 'product-item__price')
 
-    const discountSpan = document.createElement('span')
-    discountSpan.setAttribute('class', 'product-item__discount')
-    discountSpan.textContent = ""
+        const fullPriceSpan = document.createElement('span')
+        fullPriceSpan.setAttribute('class', 'product-item__full-price')
+        fullPriceSpan.textContent = `$${product.price}`
 
-    const newEl = document.createElement('span')
-    newEl.setAttribute('class', 'product-item__new')
-    newEl.textContent = "NEW!"
+        const discountSpan = document.createElement('span')
+        discountSpan.setAttribute('class', 'product-item__discount')
+        discountSpan.textContent = `$${product.discountedPrice}`
 
-    priceEl.append(fullPriceSpan, discountSpan)
-    productItem.append(imageEl, productTitleEl, priceEl, newEl)
+        const newEl = document.createElement('span')
+        newEl.setAttribute('class', 'product-item__new')
+        newEl.textContent = "NEW!"
 
+        priceEl.append(fullPriceSpan, discountSpan)
+        productItem.append(imageEl, productTitleEl, priceEl, newEl)
 
+    }
 
 
 }
