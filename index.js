@@ -81,6 +81,7 @@ function renderHeader() {
         aEl.addEventListener('click', function () {
             state.selectedFilter = filter
             state.selectedItem = null
+            // state.selectedFilter = getItemsToDisplay()
             render()
         })
 
@@ -185,7 +186,7 @@ function renderProductList(mainEl) {
 
     mainEl.append(titleEl, productList)
 
-    for (const product of state.store) {
+    for (const product of getItemsToDisplay()) {
         renderProductItem(product, productList)
     }
 }
