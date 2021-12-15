@@ -1,5 +1,28 @@
 const state = {
-    store: []
+    store: [],
+    typeFilters: ['Girls', 'Guys', 'Sale'],
+    selectedFilter: 'Home',
+
+}
+
+
+function getItemsToDisplay() {
+    let itemsToDisplay = state.store
+
+    if (state.selectedFilter === 'Girls') {
+        itemsToDisplay = itemsToDisplay.filter(item => item.type === 'Girls')
+    }
+
+    if (state.selectedFilter === 'Guys') {
+        itemsToDisplay = itemsToDisplay.filter(item => item.type === 'Guys')
+    }
+
+    if (state.selectedFilter === 'Sale') {
+        itemsToDisplay = itemsToDisplay.filter(item => item.discountedPrice !== undefined)
+    }
+
+    return itemsToDisplay
+
 }
 
 function fetchStore() {
@@ -32,33 +55,40 @@ function renderHeader() {
     document.body.append(headerEl)
 
     const h1El = document.createElement("h1")
-    h1El.textContent = "HOLLIXTON"
-    headerEl.append(h1El)
+    h1El.textContent = "Hollixton"
+    h1El.addEventListener('click', function () {
+        state.selectedFilter = 'Home'
+        render()
+    })
 
-    //     const navEL = document.createElement("nav")
-    //     navEL.setAttribute("class", "header-nav")
+    // Left navigation
 
-    //     const ulEl = document.createElement("ul")
-    //     ulEl.setAttribute("class", "header-ul")
+    const leftNavEL = document.createElement("nav")
+    leftNavEL.setAttribute("class", "header__left")
 
-    //     const girlsSection = document.createElement("li")
-    //     girlsSection.setAttribute("class", "girls")
+    const leftNavUl = document.createElement("ul")
+    leftNavUl.setAttribute("class", "header__left_list")
 
-    //     const girlsAnchor = document.createElement("a")
-    //     girlsAnchor.setAttribute("href", "")
+    for (const filter of state.typeFilters) {
+        const liEl = document.createElement('li')
+        liEl.setAttribute('claas', 'header__left__item')
 
-    //     const boysSection = document.createElement("li")
-    //     boysSection.setAttribute("class", "guys")
+        const aEl = document.createElement('a')
+        aEl.setAttribute('href', '#')
+        aEl.textContent = filter
+        aEl.addEventListener('click', function () {
+            state.selectedFilter = filter
+            state.selectedItem = null
+            render()
+        })
 
-    //     const boysAnchor = document.createElement("a")
-    //     boysAnchor.setAttribute("href", "")
+        liEl.append(aEl)
+        leftNavUl.append(liEl)
+    }
 
+    leftNavEL.append(leftNavUl)
 
-    //     const salesSection = document.createElement("li")
-    //     salesSection.setAttribute("class", "sales")
-
-    //     const salesAnchor = document.createElement("a")
-    //     salesAnchor.setAttribute("href", "")
+    headerEl.append(h1El, leftNavEL)
 
 
     //     const rightSectionBar = document.createElement("section")
