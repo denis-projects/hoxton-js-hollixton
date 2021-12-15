@@ -70,10 +70,20 @@ img {
 
 .product-item__price {
     font-weight: bold;
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: start;
+    gap: 0.5rem;
 }
 
 .product-item__discount {
     color: red;
+}
+
+.product-item__full-price.discounted {
+    text-decoration: line-through;
+    font-weight: 300;
+    opacity: 0.4;
 }
 
 .product-item__new {

@@ -1,34 +1,5 @@
 const state = {
-    store: [
-        {
-            "id": 1,
-            "type": "Guys",
-            "name": "Crewneck T-Shirt 3-Pack",
-            "image": "https://img.hollisterco.com/is/image/anf/KIC_324-1085-0123-100_prod1",
-            "price": 40,
-            "discountedPrice": 21.99,
-            "dateEntered": "2021/08/10",
-            "stock": 10
-        },
-        {
-            "id": 2,
-            "type": "Girls",
-            "name": "Smocked Tiered Mini Dress",
-            "image": "https://img.hollisterco.com/is/image/anf/KIC_359-1220-1911-805_prod1",
-            "price": 29,
-            "dateEntered": "2021/07/10",
-            "stock": 5
-        },
-        {
-            "id": 3,
-            "type": "Girls",
-            "name": "Gilly Hicks Cozy Joggers",
-            "image": "https://img.hollisterco.com/is/image/anf/KIC_346-1252-0485-116_prod1",
-            "price": 27,
-            "dateEntered": "2021/05/06",
-            "stock": 15
-        }
-    ]
+    store: []
 }
 
 function fetchStore() {
@@ -127,21 +98,64 @@ function renderHeader() {
 
 }
 
-{/* 
-<main>
- <h2 class="main-title">Home</h2>
- <ul class="product-list">
-    <li class="product-item">
-        <img class="product-item__image"
-            src="https://img.hollisterco.com/is/image/anf/KIC_359-1220-1911-805_prod1" alt="" />
-        <h3 class="product-item__title">Title</h3>
-        <p class="product-item__price">
-            <span class="product-item__full-price">$40</span> <span class="product-item__discount">$22</span>
-        </p>
-        <span class="product-item__new">NEW!</span>
-    </li>
- </ul>
-</main> */}
+function isItemNew(product) {
+    const daysToConsider = 11
+    const second = 1000
+    const minute = second * 60
+    const hour = minute * 60
+    const day = hour * 24
+
+    const msForTenDaysAgo = Date.now() - (day * daysToConsider)
+
+    const msForProductDate = Date.parse(product.dateEntered)
+
+    return msForProductDate > msForTenDaysAgo
+}
+
+function renderProductItem(product, productList) {
+    const productItem = document.createElement('li')
+    productItem.setAttribute('class', 'product-item')
+
+    productList.append(productItem)
+
+    const imageEl = document.createElement('img')
+    imageEl.setAttribute('class', 'product-item__image')
+    imageEl.setAttribute('src', product.image)
+
+    const productTitleEl = document.createElement('h3')
+    productTitleEl.setAttribute('class', 'product-item__title')
+    productTitleEl.textContent = product.name
+
+    const priceEl = document.createElement('p')
+    priceEl.setAttribute('class', 'product-item__price')
+
+    const fullPriceSpan = document.createElement('span')
+    fullPriceSpan.setAttribute('class', 'product-item__full-price')
+    fullPriceSpan.textContent = `$${product.price}`
+    priceEl.append(fullPriceSpan)
+
+    if (product.discountedPrice) {
+        fullPriceSpan.classList.add('discounted')
+        const discountSpan = document.createElement('span')
+        discountSpan.setAttribute('class', 'product-item__discount')
+        discountSpan.textContent = `$${product.discountedPrice}`
+        priceEl.append(discountSpan)
+    }
+
+    productItem.append(imageEl, productTitleEl, priceEl)
+
+
+    if (isItemNew(product)) {
+        const newEl = document.createElement('span')
+        newEl.setAttribute('class', 'product-item__new')
+        newEl.textContent = "NEW!"
+        productItem.append(newEl)
+
+    }
+
+
+
+}
 
 function renderMain() {
     const mainEl = document.createElement("main")
@@ -157,40 +171,8 @@ function renderMain() {
     mainEl.append(titleEl, productList)
 
     for (const product of state.store) {
-
-        const productItem = document.createElement('li')
-        productItem.setAttribute('class', 'product-item')
-
-        productList.append(productItem)
-
-        const imageEl = document.createElement('img')
-        imageEl.setAttribute('class', 'product-item__image')
-        imageEl.setAttribute('src', product.image)
-
-        const productTitleEl = document.createElement('h3')
-        productTitleEl.setAttribute('class', 'product-item__title')
-        productTitleEl.textContent = product.name
-
-        const priceEl = document.createElement('p')
-        priceEl.setAttribute('class', 'product-item__price')
-
-        const fullPriceSpan = document.createElement('span')
-        fullPriceSpan.setAttribute('class', 'product-item__full-price')
-        fullPriceSpan.textContent = `$${product.price}`
-
-        const discountSpan = document.createElement('span')
-        discountSpan.setAttribute('class', 'product-item__discount')
-        discountSpan.textContent = `$${product.discountedPrice}`
-
-        const newEl = document.createElement('span')
-        newEl.setAttribute('class', 'product-item__new')
-        newEl.textContent = "NEW!"
-
-        priceEl.append(fullPriceSpan, discountSpan)
-        productItem.append(imageEl, productTitleEl, priceEl, newEl)
-
+        renderProductItem(product, productList)
     }
-
 
 }
 
@@ -218,4 +200,14 @@ function render() {
     renderFooter()
 }
 
-render()
+
+function init() {
+    render()
+    fetchStore()
+        .then(function (store) {
+            state.store = store
+            render()
+        })
+}
+
+init()
