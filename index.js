@@ -2,6 +2,7 @@ const state = {
     store: [],
     typeFilters: ['Girls', 'Guys', 'Sale'],
     selectedFilter: 'Home',
+    selectedItem: null
 
 }
 
@@ -78,7 +79,6 @@ function renderHeader() {
         aEl.textContent = filter
         aEl.addEventListener('click', function () {
             state.selectedFilter = filter
-            state.selectedItem = null
             render()
         })
 
@@ -89,42 +89,6 @@ function renderHeader() {
     leftNavEL.append(leftNavUl)
 
     headerEl.append(h1El, leftNavEL)
-
-
-    //     const rightSectionBar = document.createElement("section")
-    //     rightSectionBar.setAttribute("class", "section-bar")
-
-    //     const rightUlEl = document.createElement("ul")
-    //     rightUlEl.setAttribute("class", "right-ul-el")
-
-    //     const search = document.createElement("li")
-    //     search.setAttribute("class", "right-search-loop")
-
-
-    //     const searchButton = document.createElement("button")
-    //     searchButton.setAttribute("class", "search-button")
-
-    //     const imageBtn = document.createElement("img")
-    //     imageBtn.setAttribute("src", "")
-
-
-    //     const loginLi = document.createElement("li")
-    //     loginLi.setAttribute("class", "users")
-
-    //     const loginBtn = document.createElement("button")
-    //     loginBtn.setAttribute("class", "login-button")
-
-    //     const imageLoginBtn = document.createElement("img")
-    //     imageLoginBtn.setAttribute("src", "")
-
-    //     const cartLi = document.createElement("li")
-    //     cartLi.setAttribute("class", "right-cart-li")
-
-    //     const cartBtn = document.createElement("button")
-    //     cartBtn.setAttribute("class", "cart-button")
-
-    //     const imageCartButton = document.createElement("img")
-    //     imageCartButton.setAttribute("src", "./assets/shopping-bag.png")
 
 }
 
@@ -144,6 +108,11 @@ function isItemNew(product) {
 function renderProductItem(product, productList) {
     const productItem = document.createElement('li')
     productItem.setAttribute('class', 'product-item')
+    productItem.addEventListener('click', function () {
+        state.selectedItem = product
+        render()
+    })
+
 
     productList.append(productItem)
 
@@ -190,17 +159,21 @@ function renderMain() {
     const mainEl = document.createElement("main")
     document.body.append(mainEl)
 
-    const titleEl = document.createElement("h2")
-    titleEl.textContent = "Home"
-    titleEl.setAttribute('class', 'main-title')
+    if (state.selectedItem !== null) {
 
-    const productList = document.createElement('ul')
-    productList.setAttribute('class', 'product-list')
+    } else {
+        const titleEl = document.createElement("h2")
+        titleEl.textContent = state.selectedFilter
+        titleEl.setAttribute('class', 'main-title')
 
-    mainEl.append(titleEl, productList)
+        const productList = document.createElement('ul')
+        productList.setAttribute('class', 'product-list')
 
-    for (const product of state.store) {
-        renderProductItem(product, productList)
+        mainEl.append(titleEl, productList)
+
+        for (const product of state.store) {
+            renderProductItem(product, productList)
+        }
     }
 
 }
