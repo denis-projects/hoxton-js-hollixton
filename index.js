@@ -23,8 +23,8 @@ function getItemsToDisplay() {
     }
 
     return itemsToDisplay
-
 }
+
 
 function fetchStore() {
     return fetch(`http://localhost:3000/store`).then(function (resp) {
@@ -59,6 +59,7 @@ function renderHeader() {
     h1El.textContent = "Hollixton"
     h1El.addEventListener('click', function () {
         state.selectedFilter = 'Home'
+        state.selectedItem = null
         render()
     })
 
@@ -72,13 +73,14 @@ function renderHeader() {
 
     for (const filter of state.typeFilters) {
         const liEl = document.createElement('li')
-        liEl.setAttribute('claas', 'header__left__item')
+        liEl.setAttribute('class', 'header__left__item')
 
         const aEl = document.createElement('a')
         aEl.setAttribute('href', '#')
         aEl.textContent = filter
         aEl.addEventListener('click', function () {
             state.selectedFilter = filter
+            state.selectedItem = null
             render()
         })
 
@@ -151,34 +153,56 @@ function renderProductItem(product, productList) {
 
     }
 
-
-
 }
+
+function renderItemDetails(mainEl) {
+    const detailsEl = document.createElement('div')
+    detailsEl.setAttribute('class', 'product-details')
+
+    const imgEl = document.createElement('img')
+    imgEl.setAttribute('class', 'product-details__img')
+    imgEl.setAttribute('src', state.selectedItem.image)
+
+    const h2El = document.createElement('h2')
+    h2El.textContent = state.selectedItem.name
+    h2El.setAttribute('class', 'product-details__title')
+
+    const bagEl = document.createElement('button')
+    bagEl.setAttribute('class', 'product-details__add-to-bag')
+    bagEl.textContent = 'ADD TO BAG'
+
+    detailsEl.append(imgEl, h2El, bagEl)
+    mainEl.append(detailsEl)
+}
+
+function renderProductList(mainEl) {
+    const titleEl = document.createElement("h2")
+    titleEl.textContent = state.selectedFilter
+    titleEl.setAttribute('class', 'main-title')
+
+    const productList = document.createElement('ul')
+    productList.setAttribute('class', 'product-list')
+
+    mainEl.append(titleEl, productList)
+
+    for (const product of state.store) {
+        renderProductItem(product, productList)
+    }
+}
+
 
 function renderMain() {
     const mainEl = document.createElement("main")
     document.body.append(mainEl)
 
     if (state.selectedItem !== null) {
+        renderItemDetails(mainEl)
 
     } else {
-        const titleEl = document.createElement("h2")
-        titleEl.textContent = state.selectedFilter
-        titleEl.setAttribute('class', 'main-title')
-
-        const productList = document.createElement('ul')
-        productList.setAttribute('class', 'product-list')
-
-        mainEl.append(titleEl, productList)
-
-        for (const product of state.store) {
-            renderProductItem(product, productList)
-        }
+        renderProductList(mainEl)
     }
 
 }
-
-
 
 {/* <footer>
         <h2>Hollixton</h2>
