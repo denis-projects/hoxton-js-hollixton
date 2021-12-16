@@ -32,24 +32,7 @@ function fetchStore() {
     })
 }
 
-{/* 
-<header>
-<h1 class="logo">Hollixton</h1>
-<nav class="header-left">
-    <ul class="header__left__list">
-        <li class="header__left__item"><a href="">Girls</a></li>
-        <li class="header__left__item"><a href="">Guys</a></li>
-        <li class="header__left__item"><a href="">Sale</a></li>
-    </ul>
-</nav>
-<nav class="header__right">
-    <ul class="header__right__list">
-        <li class="header__right__item"><button>search</button></li>
-        <li class="header__right__item"><button>login</button></li>
-        <li class="header__right__item"><button>cart</button></li>
-    </ul>
-</nav>
-</header> */}
+
 function renderHeader() {
 
     const headerEl = document.createElement("header")
@@ -95,13 +78,47 @@ function renderHeader() {
 
     // right navigation
 
+    const rightNavEl = document.createElement('nav')
+    rightNavEl.setAttribute('class', 'header__right')
+
+    const rightNavUl = document.createElement('ul')
+    rightNavUl.setAttribute('class', 'header__right__list')
+    rightNavEl.append(rightNavUl)
+
+    const searchLi = document.createElement('li')
+    searchLi.setAttribute('class', 'header__right__item')
+
+    const searchElBtn = document.createElement('button')
+    searchElBtn.textContent = 'Search'
+    searchLi.append(searchElBtn)
+
+    const loginLi = document.createElement('li')
+    loginLi.setAttribute('class', 'header__right__item')
+
+    const loginElBtn = document.createElement('button')
+    loginElBtn.textContent = 'Log in'
+    loginElBtn.addEventListener('click', renderModal)
+    loginLi.append(loginElBtn)
+
+    const cartLi = document.createElement('li')
+    cartLi.setAttribute('class', 'header__right__item')
+
+    const cartElBtn = document.createElement('button')
+    cartElBtn.textContent = 'Cart'
+    cartLi.append(cartElBtn)
+
+    rightNavUl.append(searchLi, loginLi, cartLi)
+
+    headerEl.append(rightNavEl)
 
 
-    const loginBtn = document.createElement('button')
-    loginBtn.textContent = "Log In"
-    loginBtn.addEventListener('click', renderModal)
 
-    headerEl.append(loginBtn)
+
+
+
+
+
+
 
 }
 
