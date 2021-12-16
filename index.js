@@ -81,7 +81,7 @@ function renderHeader() {
         aEl.addEventListener('click', function () {
             state.selectedFilter = filter
             state.selectedItem = null
-            // state.selectedFilter = getItemsToDisplay()
+
             render()
         })
 
@@ -171,6 +171,10 @@ function renderItemDetails(mainEl) {
     const bagEl = document.createElement('button')
     bagEl.setAttribute('class', 'product-details__add-to-bag')
     bagEl.textContent = 'ADD TO BAG'
+    bagEl.addEventListener('click', function () {
+        state.selectedItem = null
+        render()
+    })
 
     detailsEl.append(imgEl, h2El, bagEl)
     mainEl.append(detailsEl)
