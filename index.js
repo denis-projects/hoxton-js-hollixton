@@ -93,6 +93,20 @@ function renderHeader() {
 
     headerEl.append(h1El, leftNavEL)
 
+    // right navigation
+
+
+
+    const loginBtn = document.createElement('button')
+    loginBtn.textContent = "Log In"
+    loginBtn.addEventListener('click', renderModal)
+
+    headerEl.append(loginBtn)
+
+}
+
+function renderModal() {
+    // 
 }
 
 function isItemNew(product) {
@@ -209,19 +223,28 @@ function renderMain() {
 
 }
 
-{/* <footer>
-        <h2>Hollixton</h2>
-        <div>
-            <img src="" alt="">
-            <span>United Kingdom</span>
-        </div>
-</footer> */}
 
 function renderFooter() {
-    //     const h2El = document.createElement("h2")
-    //     h2El.textContent = "Footer"
 
-    //     document.body.append(h2El)
+    const footerEl = document.createElement('footer')
+    document.body.append(footerEl)
+
+    const h2El = document.createElement("h2")
+    h2El.textContent = "Hollixton"
+
+    const divEl = document.createElement('div')
+    footerEl.append(h2El, divEl)
+
+    const imgEl = document.createElement('img')
+    imgEl.setAttribute('src', '#')
+
+    const spanEl = document.createElement('span')
+    spanEl.textContent = 'United Kingdom'
+
+    divEl.append(imgEl, spanEl)
+
+
+
 }
 
 function render() {
